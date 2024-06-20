@@ -1,7 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,13 +15,27 @@ public class MainUI : MonoBehaviour
     [SerializeField] private Canvas timePrizeUI;
     [SerializeField] private Canvas tradeUI;
     [SerializeField] private Canvas mainUI;
+    [SerializeField] private Canvas openCaseUI;
     private AudioClip[] soundClips;
+    public List<string[]> chances;
+    private float case_rarity;
 
     public void BananaPress()
     {
         int count = Convert.ToInt32(number.text);
         number.text = Convert.ToString(count + 1);
         PlaySound();
+        CheckForCase();
+    }
+    private void CheckForCase()
+    {
+        float random_value = UnityEngine.Random.value;
+
+        if (random_value <= case_rarity)
+        {
+            Debug.Log("Dropping case");
+            OpenCase();
+        }
     }
 
     void Start()
@@ -29,6 +46,22 @@ public class MainUI : MonoBehaviour
             soundEffect = gameObject.AddComponent<AudioSource>();
         }
         soundClips = Resources.LoadAll<AudioClip>("Sounds/Hits");
+        // Загрузка CSV файла из папки Resources
+        TextAsset csvFile = Resources.Load<TextAsset>("Data/chances");
+        // Чтение строк из файла
+        StringReader reader = new StringReader(csvFile.text);
+        List<string[]> chances = new List<string[]>();
+        string line;
+        while ((line = reader.ReadLine()) != null)
+        {
+            // Разделение строки на элементы
+            string[] fields = line.Split(',');
+            chances.Add(fields);
+        }
+        CultureInfo ci = (CultureInfo)CultureInfo.CurrentCulture.Clone();
+        ci.NumberFormat.CurrencyDecimalSeparator = ".";
+        case_rarity = float.Parse(chances[6][1], NumberStyles.Any, ci);
+        Debug.Log("case_rarity: " + case_rarity);
     }
 
     private void PlaySound()
@@ -49,5 +82,10 @@ public class MainUI : MonoBehaviour
     {
         mainUI.enabled = false;
         tradeUI.enabled = true;
+    }
+    public void OpenCase()
+    {
+        mainUI.enabled = false;
+        openCaseUI.enabled = true;
     }
 }
