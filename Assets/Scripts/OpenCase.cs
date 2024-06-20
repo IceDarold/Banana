@@ -19,15 +19,12 @@ public class OpenCase : MonoBehaviour
 
     private void Start()
     {
-        // Загрузка CSV файла из папки Resources
         TextAsset csvFile = Resources.Load<TextAsset>("Data/chances");
-        // Чтение строк из файла
         StringReader reader = new StringReader(csvFile.text);
         List<string[]> chances = new List<string[]>();
         string line;
         while ((line = reader.ReadLine()) != null)
         {
-            // Разделение строки на элементы
             string[] fields = line.Split(',');
             chances.Add(fields);
         }
@@ -63,30 +60,30 @@ public class OpenCase : MonoBehaviour
                     {
                         if (random_value <= mythical_rarity)
                         {
-                            // выдать мифический банан
+                            // giving mythical banana
                             Debug.Log("Giving mythical banana");
                         }
                         else
                         {
-                            // выдать легендарный банан
+                            // giving legendary banana
                             Debug.Log("Giving legendary banana");
                         }
                     }
                     else
                     {
-                        // выдать эпический банан
+                        // giving epic banana
                         Debug.Log("Giving epic banana");
                     }
                 }
                 else
                 {
-                    // выдать суперредкий банан
+                    // giving superrare banana
                     Debug.Log("Giving superrare banana");
                 }
             }
             else
             {
-                // выдать редкий банан
+                // giving rare banana
                 Debug.Log("Giving rare banana");
             }
         }

@@ -46,15 +46,12 @@ public class MainUI : MonoBehaviour
             soundEffect = gameObject.AddComponent<AudioSource>();
         }
         soundClips = Resources.LoadAll<AudioClip>("Sounds/Hits");
-        // Загрузка CSV файла из папки Resources
         TextAsset csvFile = Resources.Load<TextAsset>("Data/chances");
-        // Чтение строк из файла
         StringReader reader = new StringReader(csvFile.text);
         List<string[]> chances = new List<string[]>();
         string line;
         while ((line = reader.ReadLine()) != null)
         {
-            // Разделение строки на элементы
             string[] fields = line.Split(',');
             chances.Add(fields);
         }
