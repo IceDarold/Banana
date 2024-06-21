@@ -672,6 +672,7 @@ GameObject:
   - component: {fileID: 449526951}
   - component: {fileID: 449526950}
   - component: {fileID: 449526949}
+  - component: {fileID: 449526952}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -729,6 +730,28 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &449526952
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 449526948}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c2ae2acdeea8e24f99a7dd8a4f02bdc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RareBananas:
+  - {fileID: 0}
+  SuperRareBananas:
+  - {fileID: 0}
+  EpicBananas:
+  - {fileID: 0}
+  MythicalBananas:
+  - {fileID: 0}
+  LegendaryBananas:
+  - {fileID: 0}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1569,6 +1592,7 @@ MonoBehaviour:
   timePrizeUI: {fileID: 1778971001}
   tradeUI: {fileID: 1803565949}
   mainUI: {fileID: 1126249207}
+  PA: {fileID: 449526952}
 --- !u!1 &1330948568
 GameObject:
   m_ObjectHideFlags: 0

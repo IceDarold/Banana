@@ -14,11 +14,16 @@ public class MainUI : MonoBehaviour
     [SerializeField] private Canvas mainUI;
     private AudioClip[] soundClips;
 
+    [SerializeField]
+    PermanentAwards PA;  
+
     public void BananaPress()
     {
         int count = Convert.ToInt32(number.text);
         number.text = Convert.ToString(count + 1);
         PlaySound();
+
+        PA.CheckCliksForGarant(count + 1);
     }
 
     void Start()
