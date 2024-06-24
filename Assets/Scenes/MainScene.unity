@@ -743,7 +743,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   RareBananas:
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 66cfd18103541a0428aeec0791f5fc25, type: 2}
   SuperRareBananas:
   - {fileID: 0}
   EpicBananas:
@@ -752,6 +752,7 @@ MonoBehaviour:
   - {fileID: 0}
   LegendaryBananas:
   - {fileID: 0}
+  fileName: chances
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
