@@ -16,6 +16,13 @@ namespace Assets.Scripts
             InitTimers();
         }
 
+        private void OnDisable()
+        {
+            OffTimers();
+        }
+
+        
+
         private void Start()
         {
             StartTimers();
@@ -32,15 +39,20 @@ namespace Assets.Scripts
                 }
 
                 timer.Value.OnUpdate();
-
-                if (timer.Value.IsEnd)
-                {
-                    
-                    //ToDo ChangingButtons
-                }
-
             }
         }
+
+        private void OnTimerTick(RarityType type)
+        {
+            Debug.Log(type.ToString() + " Ticked");
+        }
+
+
+        private void OnTimerEnd(RarityType type)
+        {
+            Debug.Log(type.ToString() + " End");
+        }
+
 
 
         private void StartTimers()
@@ -58,10 +70,23 @@ namespace Assets.Scripts
             for (int i = 0; i < rarityTypes.Length; i++)
             {
                 RarityType type = (RarityType) rarityTypes.GetValue(i);
-                PrizeTimer prizeTimer = new PrizeTimer();
+                PrizeTimer prizeTimer = new PrizeTimer(type);
+
+                prizeTimer.OnTimerTick += OnTimerTick;
+                prizeTimer.OnTimerEnd += OnTimerEnd;
+
 
                 _timers.TryAdd( type, prizeTimer );
 
+            }
+        }
+
+        private void OffTimers()
+        {
+            foreach( var _timer in _timers)
+            {
+                _timer.Value.OnTimerTick -= OnTimerTick;
+                _timer.Value.OnTimerEnd -= OnTimerEnd;
             }
         }
 

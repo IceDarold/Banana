@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 
 namespace Assets.Scripts
@@ -7,16 +8,29 @@ namespace Assets.Scripts
     {
         public bool IsEnd {  get; private set; } = true;
 
+        public Action<RarityType> OnTimerTick;
+        public Action<RarityType> OnTimerEnd;
+
         private float _remainingTime;
+        private float _tickTime;
+
+        private readonly RarityType TYPE;
 
         private readonly RussianWord HOURS = new RussianWord("час", "часа", "часв");
         private readonly RussianWord MINUTES = new RussianWord("минута", "минуты", "минут");
         private readonly RussianWord SECONDS = new RussianWord("секунда", "секунды", "секунд");
 
 
+        public PrizeTimer(RarityType type)
+        {
+            TYPE = type;
+        }
+
+
         public void SetTime(float remainingTime)
         {
             _remainingTime = remainingTime;
+            _tickTime = 1f;
             IsEnd = false;
         }
 
@@ -26,10 +40,18 @@ namespace Assets.Scripts
             if (!IsEnd)
             {
                 _remainingTime -= Time.deltaTime;
+                _tickTime -= Time.deltaTime;
 
-                if (_remainingTime <= 0)
+                if (_remainingTime <= 0f)
                 {
                     IsEnd = true;
+                    OnTimerEnd?.Invoke(TYPE);
+                }
+
+                if(_tickTime <= 0f)
+                {
+                    OnTimerTick?.Invoke(TYPE);
+                    _tickTime = 1f;
                 }
             }
         }
