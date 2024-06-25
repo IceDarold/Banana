@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,6 +9,9 @@ namespace Assets.Scripts
     [RequireComponent (typeof(Button))]
     public class PrizeButtonComponent : MonoBehaviour
     {
+        public Action<RarityType> OnGetPrize;
+
+
         [SerializeField] private RarityType rarityType;
         [SerializeField] private TextMeshProUGUI text;
         [SerializeField] private Button button;
@@ -21,6 +25,13 @@ namespace Assets.Scripts
         {
             button = GetComponent<Button>();
             button.interactable = false;
+
+            button.onClick.AddListener(() =>  OnGetPrize.Invoke(rarityType));
+        }
+
+        private void OnDisable()
+        {
+            button.onClick.RemoveAllListeners();
         }
 
 
@@ -41,6 +52,8 @@ namespace Assets.Scripts
             text.text = GET_PRIZE;
             
         }
+
+        
        
     }
 }
