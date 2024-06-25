@@ -56,6 +56,10 @@ namespace Assets.Scripts
             }
         }
 
+        public string GetTime()
+        {
+            return ConvertTime();
+        }
 
         private string ConvertTime()
         {
@@ -66,9 +70,14 @@ namespace Assets.Scripts
             int minutes = (remainingTimeInt % 3600) / 60;
             int seconds = ((remainingTimeInt % 3600) % 60);
 
-            result += hours.ToString() + " " + HOURS.GetRightVersion(hours) + " ";
-            result += minutes.ToString() + " " + MINUTES.GetRightVersion(minutes) + " ";
-            result += seconds.ToString() + " " + SECONDS.GetRightVersion(seconds);
+            if(hours != 0) 
+                result += hours.ToString() + " " + HOURS.GetRightVersion(hours) + " ";
+
+            if (minutes != 0) 
+                result += minutes.ToString() + " " + MINUTES.GetRightVersion(minutes) + " ";
+
+            if (seconds != 0) 
+                result += seconds.ToString() + " " + SECONDS.GetRightVersion(seconds);
 
 
             return result;

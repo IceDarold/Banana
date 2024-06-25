@@ -7,6 +7,8 @@ namespace Assets.Scripts
 {
     public class TimersController : MonoBehaviour
     {
+        [SerializeField] private PrizeButtonsController prizeButtonsController;
+
         private Dictionary<RarityType, PrizeTimer> _timers;
 
 
@@ -44,13 +46,16 @@ namespace Assets.Scripts
 
         private void OnTimerTick(RarityType type)
         {
-            Debug.Log(type.ToString() + " Ticked");
+            string time = _timers[type].GetTime();
+
+            prizeButtonsController.UpdateData(time,type);
+
         }
 
 
         private void OnTimerEnd(RarityType type)
         {
-            Debug.Log(type.ToString() + " End");
+            prizeButtonsController.UpdateData("Stopped", type);
         }
 
 
@@ -59,7 +64,7 @@ namespace Assets.Scripts
         {
             foreach (var _timer in _timers)
             {
-                _timer.Value.SetTime(UnityEngine.Random.value * 10f);
+                _timer.Value.SetTime(UnityEngine.Random.value * 100f);
             }
         }
 
