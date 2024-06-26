@@ -16,11 +16,15 @@ namespace Assets.Scripts
         {
             _timers = new Dictionary<RarityType, PrizeTimer> ();
             InitTimers();
+
+            prizeButtonsController.OnGetPrizeEnd += StartTimer;
         }
 
         private void OnDisable()
         {
             OffTimers();
+
+            prizeButtonsController.OnGetPrizeEnd -= StartTimer;
         }
 
         
@@ -58,7 +62,10 @@ namespace Assets.Scripts
             prizeButtonsController.UpdateData("Stopped", type);
         }
 
-
+        private void StartTimer(RarityType type)
+        {
+            _timers[type].SetTime(UnityEngine.Random.value * 100f);
+        }
 
         private void StartTimers()
         {

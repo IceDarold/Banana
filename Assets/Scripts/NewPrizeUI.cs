@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,6 +7,10 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Canvas))]
 public class NewPrizeUI : MonoBehaviour
 {
+
+
+    public Action OnScreenOff;
+
     [SerializeField] private Button continueButton;
     private Canvas newPrizeUI;
 
@@ -21,7 +26,7 @@ public class NewPrizeUI : MonoBehaviour
     {
         continueButton.onClick.RemoveAllListeners();
     }
-    public void Activate()
+    public void Activate(RarityType type)
     {
         newPrizeUI.enabled = true;
 
@@ -30,6 +35,9 @@ public class NewPrizeUI : MonoBehaviour
     public void Close()
     {
         newPrizeUI.enabled = false;
+
+        OnScreenOff?.Invoke();
+
     }
 
 }

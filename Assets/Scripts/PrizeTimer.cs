@@ -32,6 +32,7 @@ namespace Assets.Scripts
             _remainingTime = remainingTime;
             _tickTime = 1f;
             IsEnd = false;
+            OnTimerTick?.Invoke(TYPE);
         }
 
 

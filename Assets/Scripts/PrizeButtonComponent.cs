@@ -43,6 +43,7 @@ namespace Assets.Scripts
 
         public void UpdateTime(string time)
         {
+            button.interactable = false;
             text.text = INTRO_SHOW_TIME + "<b>" + time + "</b>";
         }
 
