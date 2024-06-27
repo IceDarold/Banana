@@ -8,7 +8,7 @@ namespace Assets.Scripts
     public class PrizeButtonsController : MonoBehaviour
     {
 
-        public Action<RarityType> OnGetPrizeEnd;
+        public Action<RarityType> OnGetPrize;
 
         [SerializeField] private List<PrizeButtonComponent> prizeButtons;
         [SerializeField] private NewPrizeUI newPrizeUI;
@@ -21,14 +21,13 @@ namespace Assets.Scripts
         {
             AddListeners();
 
-            newPrizeUI.OnScreenOff += () => OnGetPrizeEnd.Invoke(_currentPrize);
         }
 
         private void OnDisable()
         {
             RemoveListeners();
 
-            newPrizeUI.OnScreenOff -= () => OnGetPrizeEnd.Invoke(_currentPrize );
+            
         }
 
 
@@ -52,13 +51,11 @@ namespace Assets.Scripts
               }
         }
 
-
-        private void OnGetPrize(RarityType type)
+        private void GetPrize(RarityType type)
         {
-            newPrizeUI.Activate(type);
-            _isActiveNewPrizeScreen = true;
-            _currentPrize = type;
+            OnGetPrize?.Invoke(type);
         }
+
 
 
 
@@ -67,7 +64,7 @@ namespace Assets.Scripts
         {
             foreach(var button in prizeButtons)
             {
-                button.OnGetPrize += OnGetPrize;
+                button.OnGetPrize += GetPrize;
             }
         }
 
@@ -75,7 +72,7 @@ namespace Assets.Scripts
         {
             foreach (var button in prizeButtons)
             {
-                button.OnGetPrize -= OnGetPrize;
+                button.OnGetPrize -= GetPrize;
             }
         }
 

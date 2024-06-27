@@ -8,6 +8,7 @@ namespace Assets.Scripts
     public class TimersController : MonoBehaviour
     {
         [SerializeField] private PrizeButtonsController prizeButtonsController;
+        [SerializeField] private NewPrizeController newPrizeController;
 
         private Dictionary<RarityType, PrizeTimer> _timers;
 
@@ -17,14 +18,14 @@ namespace Assets.Scripts
             _timers = new Dictionary<RarityType, PrizeTimer> ();
             InitTimers();
 
-            prizeButtonsController.OnGetPrizeEnd += StartTimer;
+            newPrizeController.OnGetPrizeEnd += StartTimer;
         }
 
         private void OnDisable()
         {
             OffTimers();
 
-            prizeButtonsController.OnGetPrizeEnd -= StartTimer;
+            newPrizeController.OnGetPrizeEnd -= StartTimer;
         }
 
         
