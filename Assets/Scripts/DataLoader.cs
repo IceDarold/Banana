@@ -25,6 +25,19 @@ public  class DataLoader : MonoBehaviour
     }
 
 
+    public ItemData GetData(ItemType itemType,RarityType rarityType)
+    {
+        foreach(ItemData item in dataList)
+        {
+            if(item.ItemType == itemType && item.RarityType == rarityType)
+            {
+                return item;
+            }
+        }
+
+        return new ItemData();
+    }
+
     private void Load()
     {
         TextAsset csvFile = Resources.Load<TextAsset>(PATH);
@@ -39,9 +52,18 @@ public  class DataLoader : MonoBehaviour
 
             string[] name = fields[0].Split(" ");
             RarityType type;
+            ItemType itemType;
             if (Enum.TryParse<RarityType>(name[name.Length - 1], false, out type))
             {
-                
+                if(name.Length == 1)
+                {
+                    itemType = ItemType.Banana;
+                }
+                else
+                {
+                    itemType = Enum.Parse<ItemType>(name[0]);
+                }
+
                 float chance = float.Parse(fields[1], NumberStyles.Any, ci);
 
                 int garant;
@@ -55,7 +77,7 @@ public  class DataLoader : MonoBehaviour
                 }
 
 
-                dataList.Add(new ItemData(type, chance, garant));
+                dataList.Add(new ItemData(itemType,type, chance, garant));
             }
 
         }
@@ -67,12 +89,14 @@ public  class DataLoader : MonoBehaviour
 
 public struct ItemData
 {
+    public ItemType ItemType;
     public RarityType RarityType;
     public float Chance;
     public int GarantReceive;
 
-    public ItemData(RarityType rarityType, float chance, int garantReceive)
+    public ItemData(ItemType itemType , RarityType rarityType, float chance, int garantReceive)
     {
+        ItemType = itemType;
         RarityType = rarityType;
         Chance = chance;
         GarantReceive = garantReceive;
