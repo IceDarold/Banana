@@ -40,6 +40,7 @@ public  class DataLoader : MonoBehaviour
 
     private void Load()
     {
+        Debug.LogWarning("Super Rare must be written in one word in table!(else you can have bugs)");
         TextAsset csvFile = Resources.Load<TextAsset>(PATH);
         StringReader reader = new StringReader(csvFile.text);
         CultureInfo ci = (CultureInfo)CultureInfo.CurrentCulture.Clone();
