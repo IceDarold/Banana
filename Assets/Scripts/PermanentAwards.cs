@@ -20,7 +20,7 @@ public class PermanentAwards : MonoBehaviour
     [SerializeField]
     private LegendaryBanana[] legendaryBananas;
 
-    private Banana[][] _bananas;
+    private Banana[][] Bananas;
     //.................................
 
     private StreamReader _bananaChanceReader;
