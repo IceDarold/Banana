@@ -20,7 +20,7 @@ public class PermanentAwards : MonoBehaviour
     [SerializeField]
     private LegendaryBanana[] legendaryBananas;
 
-    private Banana[][] _bananas;
+    private Banana[][] Bananas;
     //.................................
 
     private StreamReader _bananaChanceReader;
@@ -35,21 +35,21 @@ public class PermanentAwards : MonoBehaviour
         InitRareClicksForGarant();
 
         // ???????????????????   Need to make this in another class 
-        _bananas = new Banana[][] { rareBananas, superRareBananas, epicBananas, mythicalBananas, legendaryBananas };
+        Bananas = new Banana[][] { rareBananas, superRareBananas, epicBananas, mythicalBananas, legendaryBananas };
     }
 
     public void CheckCliksForGarant(int clicksForGarant)
     {
         if (clicksForGarant == _clicksForGarant)
         {
-            if (_indicator >= _bananas.Length)
+            if (_indicator >= Bananas.Length)
             {
                 _clicksForGarant = -1;
                 return;
             }
 
-            int rand = UnityEngine.Random.Range(0, _bananas[_indicator].Length);
-            Inventory.AddNewItem(_bananas[_indicator][rand]);
+            int rand = UnityEngine.Random.Range(0, Bananas[_indicator].Length);
+            Inventory.AddNewItem(Bananas[_indicator][rand]);
             _indicator++;
 
             if (_bananaChanceReader != null)
