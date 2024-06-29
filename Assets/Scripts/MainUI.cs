@@ -29,6 +29,7 @@ public class MainUI : MonoBehaviour
         number.text = Convert.ToString(count + 1);
         PlaySound();
 
+
         PA.CheckCliksForGarant(count + 1);
 
         CheckForCase();
