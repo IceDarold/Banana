@@ -8,73 +8,86 @@ using UnityEngine;
 
 public class PermanentAwards : MonoBehaviour
 {
+    //????????????????????????????????
     [SerializeField]
-    private RareBanana[] RareBananas;
+    private RareBanana[] rareBananas;
     [SerializeField]
-    private SuperRareBanana[] SuperRareBananas;
+    private SuperRareBanana[] superRareBananas;
     [SerializeField]
-    private EpicBanana[] EpicBananas;
+    private EpicBanana[] epicBananas;
     [SerializeField]
-    private MythicalBanana[] MythicalBananas;
+    private MythicalBanana[] mythicalBananas;
     [SerializeField]
-    private LegendaryBanana[] LegendaryBananas;
+    private LegendaryBanana[] legendaryBananas;
 
-    private Banana[][] Bananas;
-    int indicator = 0;
+    private Banana[][] _bananas;
+    //.................................
 
-    private StreamReader bananaChanceReader;
+    private StreamReader _bananaChanceReader;
 
-    private int ClicksForGarant = -1;
+    int _clicksForGarant = -1;
+    int _indicator = 0;
 
     private void Start()
+    {
+        LoadbananaChanceReader();
+
+        InitRareClicksForGarant();
+
+        // ???????????????????   Need to make this in another class 
+        _bananas = new Banana[][] { rareBananas, superRareBananas, epicBananas, mythicalBananas, legendaryBananas };
+    }
+
+    public void CheckCliksForGarant(int clicksForGarant)
+    {
+        if (clicksForGarant == _clicksForGarant)
+        {
+            if (_indicator >= _bananas.Length)
+            {
+                _clicksForGarant = -1;
+                return;
+            }
+
+            int rand = UnityEngine.Random.Range(0, _bananas[_indicator].Length);
+            Inventory.AddNewItem(_bananas[_indicator][rand]);
+            _indicator++;
+
+            if (_bananaChanceReader != null)
+            {
+                string s = _bananaChanceReader.ReadLine();
+                if (s != null)
+                {
+                    _clicksForGarant = Int32.Parse(s.Split(',')[2]);
+                }
+                else
+                {
+                    _clicksForGarant = -1;
+                }
+            }
+        }
+    }
+
+    private void LoadbananaChanceReader()
     {
         TextAsset textAsset = Resources.Load<TextAsset>("Data/chances");
 
         if (textAsset != null)
         {
             // Using StreamReader to work with a file
-            bananaChanceReader = new StreamReader(new MemoryStream(textAsset.bytes));
+            _bananaChanceReader = new StreamReader(new MemoryStream(textAsset.bytes));
         }
-
-        if (bananaChanceReader != null) 
-        {
-            bananaChanceReader.ReadLine();   // the first line is the title, not the data
-            string s = bananaChanceReader.ReadLine();
-            if(s != null)
-            {
-                ClicksForGarant = Int32.Parse(s.Split(',')[2]);
-            }
-        }
-        Bananas = new Banana[][] { RareBananas, SuperRareBananas, EpicBananas, MythicalBananas, LegendaryBananas };
     }
 
-    public void CheckCliksForGarant(int clicksForGarant)
+    private void InitRareClicksForGarant()
     {
-        if (clicksForGarant == ClicksForGarant)
+        if (_bananaChanceReader != null)
         {
-            if (indicator >= Bananas.Length)
+            _bananaChanceReader.ReadLine();   // the first line is the title, not the data
+            string s = _bananaChanceReader.ReadLine();
+            if (s != null)
             {
-                ClicksForGarant = -1;
-                return;
-            }
-
-            int rand = UnityEngine.Random.Range(0, Bananas[indicator].Length);
-            Inventory.AddNewItem(Bananas[indicator][rand]);
-            indicator++;
-
-            if(bananaChanceReader != null)
-            {
-                string s = bananaChanceReader.ReadLine();
-                if (s != null)
-                {
-                    ClicksForGarant = Int32.Parse(s.Split(',')[2]);
-                }
-                else
-                {
-                    ClicksForGarant = -1;
-                }
+                _clicksForGarant = Int32.Parse(s.Split(',')[2]);
             }
         }
     }
-
 }
