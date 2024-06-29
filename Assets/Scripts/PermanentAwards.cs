@@ -26,21 +26,19 @@ public class PermanentAwards : MonoBehaviour
 
     private int ClicksForGarant = -1;
 
-    [SerializeField]
-    private string fileName = "chances";
     private void Start()
     {
-        TextAsset textAsset = Resources.Load<TextAsset>(fileName);        
+        TextAsset textAsset = Resources.Load<TextAsset>("Data/chances");
 
         if (textAsset != null)
         {
-            // Использование StreamReader для работы с файлом
+            // Using StreamReader to work with a file
             bananaChanceReader = new StreamReader(new MemoryStream(textAsset.bytes));
         }
 
         if (bananaChanceReader != null) 
         {
-            bananaChanceReader.ReadLine();   // первая строчка заглавие, а не данные
+            bananaChanceReader.ReadLine();   // the first line is the title, not the data
             string s = bananaChanceReader.ReadLine();
             if(s != null)
             {

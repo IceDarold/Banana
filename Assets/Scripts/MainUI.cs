@@ -30,6 +30,7 @@ public class MainUI : MonoBehaviour
         PlaySound();
 
         PA.CheckCliksForGarant(count + 1);
+
         CheckForCase();
     }
     private void CheckForCase()
