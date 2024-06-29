@@ -20,11 +20,17 @@ public class MainUI : MonoBehaviour
     public List<string[]> chances;
     private float case_rarity;
 
+    [SerializeField]
+    PermanentAwards PA;  
+
     public void BananaPress()
     {
         int count = Convert.ToInt32(number.text);
         number.text = Convert.ToString(count + 1);
         PlaySound();
+
+        PA.CheckCliksForGarant(count + 1);
+
         CheckForCase();
     }
     private void CheckForCase()
