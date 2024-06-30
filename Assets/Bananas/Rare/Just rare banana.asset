@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chance: 0.08
   garant: 0
-  bananaName: 
+  bananaName: Just rare banana
   sprite: {fileID: 21300000, guid: 733ed69f5ca82c242a0ed567f82e3d58, type: 3}
   minPrice: 10
   maxPrice: 20

@@ -9,6 +9,10 @@ using Random = UnityEngine.Random;
 public class LotGenerator : MonoBehaviour
 {
     [SerializeField]
+    private TextMeshProUGUI balanceText;
+    public GameObject BuyButtons;
+    public GameObject NotEnoughMoney;
+    [SerializeField]
     AnimationCurve curve;
     [SerializeField]
     private GameObject lotPrefab;
@@ -20,8 +24,13 @@ public class LotGenerator : MonoBehaviour
     private static List<string> _suffixes = new List<string> { "Warrior", "Mage", "Rogue", "Hunter", "Knight", "Lord", "Master", "Sage", "Seeker", "Guardian" };
     private static List<string> _middleParts = new List<string> { "Blade", "Strike", "Flame", "Frost", "Wing", "Heart", "Soul", "Moon", "Star", "Shadow" };
 
-
-    public void CreateLot(Sprite sprite, string bananaName, int minPriñe, int maxPrice)
+    private void Start()
+    {
+        Lot.BalanceText = balanceText;
+        Lot.BuyButtons = BuyButtons;
+        Lot.NotEnoughMoney = NotEnoughMoney;
+    }
+    public void CreateLot(Banana banana)
     {
         GameObject newLot = Instantiate(lotPrefab, parentTransform);
 
@@ -29,23 +38,29 @@ public class LotGenerator : MonoBehaviour
         Image[] image = newLot.GetComponentsInChildren<Image>();
         if (image != null)
         {
-            if (sprite != null)
+            if (banana.sprite != null)
             {
-                image[1].sprite = sprite;
+                image[1].sprite = banana.sprite;
             }
         }
 
 
         string namePlayer = GenerateNickname();
-        string price = CreatePrice(minPriñe, maxPrice);
+        string price = CreatePrice(banana.minPrice, banana.maxPrice);
 
         TMP_Text[] texts = newLot.GetComponentsInChildren<TMP_Text>();
         if (texts.Length >= 3)
         {
-            texts[0].text = bananaName;
+            texts[0].text = banana.bananaName;
             texts[1].text = namePlayer;
-            texts[2].text = price;
+            texts[2].text = (price + "$");
         }
+
+
+        Lot newScriptLot = newLot.GetComponent<Lot>();
+        newScriptLot.Banana = banana;
+        newScriptLot.Price = float.Parse(price);
+        newScriptLot.ThisLot = newLot;
     }
     private string GenerateNickname()
     {
@@ -66,7 +81,7 @@ public class LotGenerator : MonoBehaviour
     private string CreatePrice(int minPrice, int maxPrice)
     {
         float price;
-        price = minPrice + (maxPrice - minPrice) * curve.Evaluate(Random.Range(0, 1));
+        price = minPrice + (maxPrice - minPrice) * curve.Evaluate(Random.Range(0f, 1f));
         return String.Format("{0:.00}", price);
     }
 }
