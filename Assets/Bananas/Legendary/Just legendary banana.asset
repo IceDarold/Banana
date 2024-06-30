@@ -15,4 +15,6 @@ MonoBehaviour:
   chance: 0.00026
   garant: 0
   bananaName: 
-  sprite: {fileID: 0}
+  sprite: {fileID: 21300000, guid: 733ed69f5ca82c242a0ed567f82e3d58, type: 3}
+  minPrice: 180
+  maxPrice: 200

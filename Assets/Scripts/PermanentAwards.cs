@@ -8,21 +8,6 @@ using UnityEngine;
 
 public class PermanentAwards : MonoBehaviour
 {
-    //????????????????????????????????
-    [SerializeField]
-    private RareBanana[] rareBananas;
-    [SerializeField]
-    private SuperRareBanana[] superRareBananas;
-    [SerializeField]
-    private EpicBanana[] epicBananas;
-    [SerializeField]
-    private MythicalBanana[] mythicalBananas;
-    [SerializeField]
-    private LegendaryBanana[] legendaryBananas;
-
-    public Banana[][] Bananas;
-    //.................................
-
     private StreamReader _bananaChanceReader;
 
     int _clicksForGarant = -1;
@@ -33,23 +18,20 @@ public class PermanentAwards : MonoBehaviour
         LoadbananaChanceReader();
 
         InitRareClicksForGarant();
-
-        // ???????????????????   Need to make this in another class 
-        Bananas = new Banana[][] { rareBananas, superRareBananas, epicBananas, mythicalBananas, legendaryBananas };
     }
 
     public void CheckCliksForGarant(int clicksForGarant)
     {
         if (clicksForGarant == _clicksForGarant)
         {
-            if (_indicator >= Bananas.Length)
+            if (_indicator >= AllBananas.Bananas.Length)
             {
                 _clicksForGarant = -1;
                 return;
             }
 
-            int rand = UnityEngine.Random.Range(0, Bananas[_indicator].Length);
-            Inventory.AddNewItem(Bananas[_indicator][rand]);
+            int rand = UnityEngine.Random.Range(0, AllBananas.Bananas[_indicator].Length);
+            Inventory.AddNewItem(AllBananas.Bananas[_indicator][rand]);
             _indicator++;
 
             if (_bananaChanceReader != null)

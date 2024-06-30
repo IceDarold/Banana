@@ -4,8 +4,19 @@ using UnityEngine;
 
 public class Trade : MonoBehaviour
 {
-    [SerializeField] private Canvas mainUI;
-    [SerializeField] private Canvas tradeUI;
+    [SerializeField] 
+    private LotGenerator LotGenerator;
+    [SerializeField]
+    private Banana Banana;
+    [SerializeField] 
+    private Canvas mainUI;
+    [SerializeField] 
+    private Canvas tradeUI;
+
+    private void Start()
+    {
+        LotGenerator.CreateLot(Banana.sprite, Banana.bananaName, Banana.minPrice, Banana.maxPrice);
+    }
     public void GetBack()
     {
         mainUI.enabled = true;
