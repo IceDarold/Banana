@@ -16,10 +16,14 @@ public class BananaVibration : MonoBehaviour
     private Vector3 _startPosition;
     private Quaternion _startRotation;
 
+    private bool _isDirty;
 
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
+
+        _startPosition = transform.position;
+        _startRotation = transform.rotation;
     }
 
     private void Update()
@@ -38,14 +42,12 @@ public class BananaVibration : MonoBehaviour
                 }
             }
         }
+
+
     }
 
     private IEnumerator AddVibration(RaycastHit hit)
     {
-
-        _startPosition = transform.position;
-        _startRotation = transform.rotation;
-
         _rb.AddForceAtPosition(new Vector3(0, 0, 1) * force, hit.point,ForceMode.Impulse);
         yield return new WaitForSeconds(stopTime);
         _rb.velocity = Vector3.zero;
