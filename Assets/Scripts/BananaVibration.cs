@@ -10,13 +10,15 @@ public class BananaVibration : MonoBehaviour
     [SerializeField] private float stopTime = 0.2f;
     [SerializeField] private float returnTime = 0.2f;
 
+    [SerializeField] private InputController inputController;
     private Rigidbody _rb;
 
 
     private Vector3 _startPosition;
     private Quaternion _startRotation;
-
-    private bool _isDirty;
+    private VibrationState _state = VibrationState.Default;
+    private float _elapsedTime = 0f;
+    
 
     private void Awake()
     {
@@ -24,54 +26,68 @@ public class BananaVibration : MonoBehaviour
 
         _startPosition = transform.position;
         _startRotation = transform.rotation;
+
+        inputController.OnClickBanana += OnClick;
+
+
     }
+
+    private void OnDisable()
+    {
+        inputController.OnClickBanana -= OnClick;
+    }
+
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if(_state == VibrationState.Return)
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            Vector3 currentPosition = transform.position;
+            Quaternion currentRotation = transform.rotation;
 
-            RaycastHit hit;
-            if(Physics.Raycast(ray, out hit))
+            transform.position = Vector3.Lerp(currentPosition, _startPosition, _elapsedTime / returnTime);
+            transform.rotation = Quaternion.Lerp(currentRotation, _startRotation, _elapsedTime / returnTime);
+            _elapsedTime += Time.deltaTime;
+
+            if(returnTime - _elapsedTime < 0.001f) 
             {
-                if(hit.transform.GetComponent<BananaVibration>() != null)
-                {
-                    StartCoroutine(AddVibration(hit));
-                    
-                }
+                _state = VibrationState.Default;
+                transform.position = _startPosition;
+                transform.rotation = _startRotation;
+                _elapsedTime = 0f;
             }
         }
-
-
     }
 
-    private IEnumerator AddVibration(RaycastHit hit)
+    private void OnClick()
     {
-        _rb.AddForceAtPosition(new Vector3(0, 0, 1) * force, hit.point,ForceMode.Impulse);
+        if(_state != VibrationState.AddingForce)
+        {
+            StartCoroutine(AddVibration(inputController.ClickPosition));
+        }
+    }
+    
+
+    private IEnumerator AddVibration(Vector3 pos)
+    {
+        _rb.AddForceAtPosition(new Vector3(0, 0, 1) * force, pos,ForceMode.Impulse);
+        _state = VibrationState.AddingForce;
+        _elapsedTime = 0f;
+
         yield return new WaitForSeconds(stopTime);
+
         _rb.velocity = Vector3.zero;
         _rb.angularVelocity = Vector3.zero;
-
-        Vector3 currentPosition = transform.position;
-        Quaternion currentRotation = transform.rotation;
-
-        float elapsedTime = 0f;
-
-        while(elapsedTime < returnTime) 
-        { 
-            transform.position = Vector3.Lerp(currentPosition, _startPosition, elapsedTime/returnTime);
-            transform.rotation = Quaternion.Lerp(currentRotation,_startRotation, elapsedTime/returnTime);
-            elapsedTime += Time.deltaTime;
-            yield return null;
-        }
-
-        transform.position = _startPosition;
-        transform.rotation = _startRotation;
+        _state = VibrationState.Return;
 
         yield break;
     }
 
 
-    
+    private enum VibrationState
+    {
+        Default,
+        AddingForce,
+        Return
+    }
 }
