@@ -8,29 +8,15 @@ using Random = UnityEngine.Random;
 
 public class LotGenerator : MonoBehaviour
 {
-    [SerializeField]
-    private TextMeshProUGUI balanceText;
-    public GameObject BuyButtons;
-    public GameObject NotEnoughMoney;
-    [SerializeField]
-    AnimationCurve curve;
-    [SerializeField]
-    private GameObject lotPrefab;
-    [SerializeField]
-    private Transform parentTransform;
-
+    public static AnimationCurve curve;
+    public static GameObject lotPrefab;
+    public static Transform parentTransform;
 
     private static List<string> _prefixes = new List<string> { "Dark", "Light", "Fire", "Ice", "Shadow", "Thunder", "Storm", "Silver", "Golden", "Mighty" };
     private static List<string> _suffixes = new List<string> { "Warrior", "Mage", "Rogue", "Hunter", "Knight", "Lord", "Master", "Sage", "Seeker", "Guardian" };
     private static List<string> _middleParts = new List<string> { "Blade", "Strike", "Flame", "Frost", "Wing", "Heart", "Soul", "Moon", "Star", "Shadow" };
 
-    private void Start()
-    {
-        Lot.BalanceText = balanceText;
-        Lot.BuyButtons = BuyButtons;
-        Lot.NotEnoughMoney = NotEnoughMoney;
-    }
-    public void CreateLot(Banana banana)
+    public static void CreateLot(Banana banana)
     {
         GameObject newLot = Instantiate(lotPrefab, parentTransform);
 
@@ -60,9 +46,8 @@ public class LotGenerator : MonoBehaviour
         Lot newScriptLot = newLot.GetComponent<Lot>();
         newScriptLot.Banana = banana;
         newScriptLot.Price = float.Parse(price);
-        newScriptLot.ThisLot = newLot;
     }
-    private string GenerateNickname()
+    private static string GenerateNickname()
     {
         string prefix = _prefixes[Random.Range(0, _prefixes.Count)];
         string middle = _middleParts[Random.Range(0, _middleParts.Count)];
@@ -78,7 +63,7 @@ public class LotGenerator : MonoBehaviour
             return prefix + suffix;
         }
     }
-    private string CreatePrice(int minPrice, int maxPrice)
+    private static string CreatePrice(int minPrice, int maxPrice)
     {
         float price;
         price = minPrice + (maxPrice - minPrice) * curve.Evaluate(Random.Range(0f, 1f));

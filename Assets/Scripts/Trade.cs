@@ -1,39 +1,28 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class Trade : MonoBehaviour
 {
-    [SerializeField]
-    private ScrollRect ScrollRect;
-    [SerializeField] 
-    private LotGenerator LotGenerator;
-    [SerializeField]
-    private Banana Banana;
     [SerializeField] 
     private Canvas mainUI;
     [SerializeField] 
     private Canvas tradeUI;
+    [SerializeField]
+    public TextMeshProUGUI BalanceText;
+    [SerializeField]
+    public float Balance = 0;
 
-    private void Start()
+    private void Awake()
     {
-        FierstFillingScrollRect();
+        BalanceText.text = Convert.ToString(Balance);
     }
     public void GetBack()
     {
         mainUI.enabled = true;
         tradeUI.enabled = false;
-    }
-
-    private void FierstFillingScrollRect()
-    {
-        for (int i = 0; i < 30; i++)
-        {
-            LotGenerator.CreateLot(Banana);
-        }
-
-        //Scoll up ScrollRect
-        ScrollRect.verticalNormalizedPosition = 1f;
     }
 }

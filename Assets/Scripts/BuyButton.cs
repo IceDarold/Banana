@@ -6,22 +6,12 @@ using UnityEngine;
 
 public class BuyButton : MonoBehaviour
 {
-    [SerializeField]
-    private TextMeshProUGUI BalanceText;
-    public GameObject ThisLot;
-    public Banana Banana;
-    public float Price;
+    public Action BuyLot;
+    public Action OffThisLot;
 
-    public void BuyLot()
+    public void BuyAndOffLot()
     {
-        float balance = float.Parse(BalanceText.text);
-        balance -= Price;
-        BalanceText.text = Convert.ToString(balance);
-
-        Inventory.AddNewItem(Banana);
-    }
-    public void OffThisLot()
-    {
-        ThisLot.SetActive(false);
+        BuyLot();
+        OffThisLot();
     }
 }
