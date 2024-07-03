@@ -3135,6 +3135,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1330948569}
+  - component: {fileID: 1330948570}
   m_Layer: 0
   m_Name: UI
   m_TagString: Untagged
@@ -3161,6 +3162,28 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1330948570
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1330948568}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4fd23d8125eaa645b506c80c1d23d8a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rareBananas:
+  - {fileID: 11400000, guid: 66cfd18103541a0428aeec0791f5fc25, type: 2}
+  superRareBananas:
+  - {fileID: 11400000, guid: ff28ee3c94f597d4ca229e366e04c349, type: 2}
+  epicBananas:
+  - {fileID: 11400000, guid: c9e7ed6cbad166a408af00ade7a160d4, type: 2}
+  mythicalBananas:
+  - {fileID: 11400000, guid: 4bf8d2323bd719a43b94d73061b00780, type: 2}
+  legendaryBananas:
+  - {fileID: 11400000, guid: 0d26bfb70e20ee04a8a0c4e796a2e85e, type: 2}
 --- !u!1 &1374539050
 GameObject:
   m_ObjectHideFlags: 0
@@ -4423,32 +4446,6 @@ MonoBehaviour:
   tradeUI: {fileID: 1803565949}
   BalanceText: {fileID: 2135650738}
   Balance: 1000
-  curve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  lotPrefab: {fileID: 2138942984785594653, guid: d5e58dd832e6c174f82da81a701b1423, type: 3}
-  parentTransform: {fileID: 1030002148}
 --- !u!223 &1803565949
 Canvas:
   m_ObjectHideFlags: 0
@@ -4522,12 +4519,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7267e93073ef0384691a5161e41cc481, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Banana: {fileID: 11400000, guid: 66cfd18103541a0428aeec0791f5fc25, type: 2}
+  curve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  lotPrefab: {fileID: 2138942984785594653, guid: d5e58dd832e6c174f82da81a701b1423, type: 3}
+  parentGameObject: {fileID: 1030002147}
   trade: {fileID: 1803565948}
-  ScrollRect: {fileID: 1637425852}
-  BuyButtons: {fileID: 709845094}
-  NotEnoughMoney: {fileID: 155695207}
-  parentTransform: {fileID: 1030002147}
+  scrollRect: {fileID: 1637425852}
+  buyButtons: {fileID: 709845094}
+  notEnoughMoney: {fileID: 155695207}
   columnsNumber: 7
 --- !u!1 &1864555596
 GameObject:
