@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Inventory : MonoBehaviour
+static public class Inventory
 {
-    public Dictionary<Banana, int> itemList = new Dictionary<Banana, int>();
-    public void AddNewItem(Banana banana)
+    static public Dictionary<Banana, int> itemList = new Dictionary<Banana, int>();
+    static public void AddNewItem(Banana banana)
     {
         if (itemList.ContainsKey(banana))
         {
@@ -13,7 +13,7 @@ public class Inventory : MonoBehaviour
         }
         else
         {
-            itemList[banana] = 0;
+            itemList[banana] = 1;
         }
     }
 }

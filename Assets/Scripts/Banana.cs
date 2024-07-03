@@ -8,4 +8,6 @@ public class Banana : ScriptableObject
     public int garant;
     public string bananaName;
     public Sprite sprite;
+    public int minPrice;
+    public int maxPrice;
 }
