@@ -26,9 +26,9 @@ namespace Assets.Scripts
 
 
         [ContextMenu("Update Lots")]
-        public void UpdateLots()
+        public void UpdateLots(int page)
         {
-            int page = 1;
+            
             bool shouldChangeRect = false;
 
             if(tableSize.x * tableSize.y != _activeLots.Count)
@@ -47,22 +47,39 @@ namespace Assets.Scripts
             var data = Inventory.GetData((page - 1) * tableSize.x * tableSize.y, page * tableSize.x * tableSize.y - 1);
 
             int i = 0;
-            Debug.Log(data.Count());
             foreach(var item in data)
             {
-                if(shouldChangeRect)
+
+                    
+                if (shouldChangeRect)
                 {
-                    Debug.Log(".");
-                    _activeLots[i].UpdateData(null, 0, GetLotRect(i));
+                    _activeLots[i].UpdateData(null, item.Value, GetLotRect(i));
                 }
                 else
                 {
-                    _activeLots[i].UpdateData(null, 0);
+                    _activeLots[i].UpdateData(null, item.Value);
                 }
-                
+
+                _activeLots[i].gameObject.SetActive(true);
                 i++;              
             }
 
+            for(;i < _activeLots.Count; i++)
+            {
+                _activeLots[i].gameObject.SetActive(false);
+            }
+
+        }
+
+        public int GetPageCount()
+        {
+            int count = Inventory.GetItemsCount() / (tableSize.x * tableSize.y);
+            if(count * tableSize.x * tableSize.y < Inventory.GetItemsCount())
+            {
+                count++;
+            }
+
+            return count;
         }
 
 
@@ -88,10 +105,11 @@ namespace Assets.Scripts
 
         private Rect GetLotRect(int index)
         {
-            Vector2Int tablePos = new Vector2Int(index % tableSize.x, index / tableSize.x);
+            Vector2Int tablePos = new Vector2Int(index % tableSize.x, - index / tableSize.x);
             Vector2 size = _size / tableSize;
-            Vector2 pos = (tablePos + new Vector2(0.5f, 0.5f)) * size - _rectTransform.rect.size/2;
-
+            Vector2 pos = (tablePos + new Vector2(0.5f, -0.5f)) * size;
+            pos.x -= _rectTransform.rect.size.x / 2;
+            pos.y += _rectTransform.rect.size.y / 2;
             Debug.Log(size.ToString() + " " + pos.ToString());
             return new Rect(pos, size);
 

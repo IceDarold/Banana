@@ -9,6 +9,7 @@ public  class Inventory : MonoBehaviour
 
     private void Awake()
     {
+        
         _itemList = new Dictionary<string, int>();
         DebugFillInventory();
     }
@@ -26,6 +27,7 @@ public  class Inventory : MonoBehaviour
 
     public static int GetItemsCount()
     {
+        Debug.Log(_itemList.Count);
         return _itemList.Count;
     }
 
